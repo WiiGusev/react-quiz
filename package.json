@@ -115,5 +115,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "webpack-config": "^7.5.0"
   }
 }
