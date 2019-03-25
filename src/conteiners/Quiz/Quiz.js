@@ -7,8 +7,9 @@ import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
 // а ActiveQuiz  в Quiz, а Quiz в App
 class Quiz extends Component {
 	state = {
-		activeQuestion: 0,
-		quiz: [
+		activeQuestion: 0, //Текущий вопрос
+		answerState: null,//текущий ответ пользователя
+		quiz: [ //список вопросов
 		{	
 			question: 'Какого цвета небо?',
 			rightAnswerId: 1,
@@ -33,14 +34,45 @@ class Quiz extends Component {
 		}
 		]
 	}
-
+//при клике на ответы определяется какой Id ответа
+//если он соответствует верному, то показывает новый вопрос
+//иначе ошибка
 onAnswerClickHandler = (answerId) => {
-	 console.log('Answer Id: ', answerId);
+	 const question = this.state.quiz[this.state.activeQuestion];
 
-	 this.setState({
-	 	activeQuestion: this.state.activeQuestion+1
-	 })
+	 if (question.rightAnswerId === answerId) {
+
+	 	this.setState({
+	 		answerState: {[answerId]: 'success'}
+	 	})
+
+
+	 	const timeout = window.setTimeout(()=>{
+	 		if (this.isQuizFinished()) {
+	 			console.log('Finished')
+	 			console.log('fin '+ this.state.activeQuestion)
+	 			console.log(this.state.quiz.length)
+	 		}
+	 		else {
+	 			this.setState({
+		 			activeQuestion: this.state.activeQuestion+1,
+		 			answerState: null
+		 		})
+	 		}
+
+	 		window.clearTimeout(timeout)
+	 	}, 1000)
+	 }
+	 else {
+	 	this.setState({
+	 		answerState: {[answerId]: 'error'}
+	 	})
+	 }
 }
+//Проверка. True = если активная страница последняя(равна length), false если не последняя
+  isQuizFinished() {
+    return this.state.activeQuestion + 1 === this.state.quiz.length
+  }
 
 	render() {
 		return (
@@ -52,6 +84,7 @@ onAnswerClickHandler = (answerId) => {
 					onAnswerClick = {this.onAnswerClickHandler}
 					quizLength = {this.state.quiz.length}
 					answerNumber = {this.state.activeQuestion+1}
+					state = {this.state.answerState}
 					/>
 				</div>
 			</div>
