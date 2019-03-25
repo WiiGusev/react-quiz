@@ -38,6 +38,19 @@ class Quiz extends Component {
 //если он соответствует верному, то показывает новый вопрос
 //иначе ошибка
 onAnswerClickHandler = (answerId) => {
+	//Проверка
+	//При клике два раза на на один ответ, засчитывается два ответа	
+	//Если пользователь уже кликнул, то проверяется, правильный ли ответ
+	//Если правильный, то делается return, чтобы не продолжать 
+	//дальнейшее выполнение метода
+	if (this.state.answerState) {
+		const key = Object.keys(this.state.answerState)[0]
+		if (this.state.answerState[key] === 'success') {
+			return 
+		}
+	}
+
+
 	 const question = this.state.quiz[this.state.activeQuestion];
 
 	 if (question.rightAnswerId === answerId) {
