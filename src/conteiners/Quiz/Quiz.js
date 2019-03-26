@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import classes from './Quiz.css';
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
+import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
 //Отображение вопросов 
 //AnswerItem передается в AnswerList, 
 // а AnswerList передается в ActiveQuiz, 
 // а ActiveQuiz  в Quiz, а Quiz в App
 class Quiz extends Component {
 	state = {
+		isFinished: true, //Закончился ли опрос
 		activeQuestion: 0, //Текущий вопрос
 		answerState: null,//текущий ответ пользователя
 		quiz: [ //список вопросов
@@ -62,9 +64,9 @@ onAnswerClickHandler = (answerId) => {
 
 	 	const timeout = window.setTimeout(()=>{
 	 		if (this.isQuizFinished()) {
-	 			console.log('Finished')
-	 			console.log('fin '+ this.state.activeQuestion)
-	 			console.log(this.state.quiz.length)
+	 			this.setState({
+	 				isFinished: true
+	 			})
 	 		}
 	 		else {
 	 			this.setState({
@@ -92,13 +94,20 @@ onAnswerClickHandler = (answerId) => {
 			<div className={classes.Quiz}>
 				<div className = {classes.QuizWrapper}>
 					<h1>Ответьте на вопросы</h1>
-					<ActiveQuiz answers={this.state.quiz[this.state.activeQuestion].answers}
-					question = {this.state.quiz[this.state.activeQuestion].question}
-					onAnswerClick = {this.onAnswerClickHandler}
-					quizLength = {this.state.quiz.length}
-					answerNumber = {this.state.activeQuestion+1}
-					state = {this.state.answerState}
-					/>
+					
+					{
+					this.state.isFinished 
+						? <FinishedQuiz 
+							 
+						  />
+						: <ActiveQuiz answers={this.state.quiz[this.state.activeQuestion].answers}
+							question = {this.state.quiz[this.state.activeQuestion].question}
+							onAnswerClick = {this.onAnswerClickHandler}
+							quizLength = {this.state.quiz.length}
+							answerNumber = {this.state.activeQuestion+1}
+							state = {this.state.answerState}
+						  />
+					}
 				</div>
 			</div>
 		)
