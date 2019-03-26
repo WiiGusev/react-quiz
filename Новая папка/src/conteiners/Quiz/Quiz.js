@@ -40,7 +40,7 @@ class Quiz extends Component {
 //при клике на ответы определяется какой Id ответа
 //если он соответствует верному, то показывает новый вопрос
 //иначе ошибка
-onAnswerClickHandler = answerId => {
+onAnswerClickHandler = (answerId) => {
 	//Проверка
 	//При клике два раза на на один ответ, засчитывается два ответа
 	//Если пользователь уже кликнул, то проверяется, правильный ли ответ
@@ -85,7 +85,7 @@ onAnswerClickHandler = answerId => {
 	 	}, 1000)
 	 }
 	 else {
-	 	results[question.id] = 'error'
+	 	results[answerId] = 'error'
 	 	this.setState({
 	 		answerState: {[answerId]: 'error'},
 	 		results
@@ -95,15 +95,6 @@ onAnswerClickHandler = answerId => {
 //Проверка. True = если активная страница последняя(равна length), false если не последняя
   isQuizFinished() {
     return this.state.activeQuestion + 1 === this.state.quiz.length
-  }
-
-  retryHandler = () => {
-  	this.setState({
-  		activeQuestion: 0,
-  		answerState: null,
-  		isFinished: false,
-  		results: {}
-  	})
   }
 
 	render() {
@@ -117,7 +108,6 @@ onAnswerClickHandler = answerId => {
 						? <FinishedQuiz
 							results = {this.state.results}
 						  	 quiz = {this.state.quiz}
-						  	onRetry = {this.retryHandler} 
 						  />
 						: <ActiveQuiz answers={this.state.quiz[this.state.activeQuestion].answers}
 							question = {this.state.quiz[this.state.activeQuestion].question}
