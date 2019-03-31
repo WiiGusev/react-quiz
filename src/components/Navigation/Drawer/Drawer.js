@@ -3,7 +3,9 @@ import classes from './Drawer.css';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 
 const links = [
-	1,2,3
+	{to: '/', label: 'Список', exact: true},
+	{to: '/auth', label: 'Авторизация', exact: false},
+	{to: '/quiz-creator', label: 'Создать тест', exact: false}
 ]
 
 class Drawer extends Component {
