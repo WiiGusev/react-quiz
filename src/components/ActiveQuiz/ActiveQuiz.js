@@ -1,24 +1,26 @@
-import React from 'react';
-import classes from './ActiveQuiz.css';
-import AnswerList from './AnswerList/AnswerList';
-//Отображение текущего вопроса
-const ActiveQuiz = props => (
-	<div className ={classes.ActiveQuiz}>
-		<p className={classes.Question}>
-			<span>
-				<strong> {props.answerNumber}. </strong>
-				&nbsp;
-				{props.question}
-			</span>
+import React from 'react'
+import classes from './ActiveQuiz.css'
+import AnswersList from './AnswersList/AnswersList'
 
-			<small> {props.answerNumber} из {props.quizLength} </small>
-		</p>
-		<AnswerList 
-		answers={props.answers}
-		onAnswerClick = {props.onAnswerClick}
-		state={props.state}
-		/>
-	</div>
-) 
+const ActiveQuiz = props => {
+  return (
+    <div className={classes.ActiveQuiz}>
+      <p className={classes.Question}>
+      <span>
+        <strong>{props.answerNumber}.</strong>&nbsp;
+        {props.question}
+      </span>
+
+        <small>{props.answerNumber} из { props.quizLength }</small>
+      </p>
+
+      <AnswersList
+        state={props.state}
+        answers={props.answers}
+        onAnswerClick={props.onAnswerClick}
+      />
+    </div>
+  )
+}
 
 export default ActiveQuiz
